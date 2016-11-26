@@ -11,6 +11,7 @@ except ImportError:
 from parseutils import *
 from stats import *
 import xbmcplugin,xbmcgui,xbmcaddon
+sslcontext = ssl.SSLContext(ssl.PROTOCOL_TLSv1)
 __baseurl__ = 'http://novaplus.nova.cz'
 __dmdbase__ = 'http://iamm.uvadi.cz/xbmc/voyo/'
 _UserAgent_ = 'Mozilla/5.0 (Windows; U; Windows NT 5.1; en-GB; rv:1.9.0.3) Gecko/2008092417 Firefox/3.0.3'
@@ -113,7 +114,6 @@ def INDEX(url,page):
 def VIDEOLINK(url,name):
     req = urllib2.Request(url)
     req.add_header('User-Agent', _UserAgent_)
-	sslcontext = ssl.SSLContext(ssl.PROTOCOL_TLSv1)
     response = urllib2.urlopen(req, context=sslcontext)
     httpdata = response.read()
     response.close()
