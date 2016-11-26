@@ -2,6 +2,7 @@
 import urllib2,urllib,re,os,string,time,base64,datetime
 from urlparse import urlparse
 import aes
+import ssl
 try:
     import hashlib
 except ImportError:
@@ -112,7 +113,8 @@ def INDEX(url,page):
 def VIDEOLINK(url,name):
     req = urllib2.Request(url)
     req.add_header('User-Agent', _UserAgent_)
-    response = urllib2.urlopen(req)
+	sslcontext = ssl.SSLContext(ssl.PROTOCOL_TLSv1)
+    response = urllib2.urlopen(req, context=sslcontext)
     httpdata = response.read()
     response.close()
     thumb = re.compile('<meta property="og:image" content="(.+?)" />').findall(httpdata)
@@ -128,7 +130,7 @@ def VIDEOLINK(url,name):
     linkgenerator = parametry[0].replace(" ","").replace("?',","?").replace("{configUrl:'","").replace(":'","=").replace("',","&").replace("'+'","").replace("'}","").replace(",","").replace(":parseInt(","")
     req = urllib2.Request(linkgenerator)
     req.add_header('User-Agent', _UserAgent_)
-    response = urllib2.urlopen(req)
+    response = urllib2.urlopen(req, context=sslcontext)
     httpdata = response.read()
     response.close()
     
